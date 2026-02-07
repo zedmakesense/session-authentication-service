@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/simple-authentication/internal/server"
+	"github.com/session-authentication-service/internal/server"
 )
 
 func main() {

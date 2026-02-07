@@ -1,4 +1,4 @@
-module github.com/simple-authentication
+module github.com/session-authentication-service
 
 go 1.25.6
 
