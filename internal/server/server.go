@@ -8,10 +8,12 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/session-authentication-service/internal/handlers"
 )
 
 type Server struct {
-	port int
+	port     int
+	handlers *handlers.Handlers
 }
 
 func NewServer() *http.Server {
@@ -21,8 +23,17 @@ func NewServer() *http.Server {
 			port = v
 		}
 	}
+
+	deps := handlers.Deps{
+		// DB: db,
+		// Cache: cache,
+		// Logger: logger,
+	}
+	h := handlers.NewHandlers(deps)
+
 	s := &Server{
-		port: port,
+		port:     port,
+		handlers: h,
 	}
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", port),

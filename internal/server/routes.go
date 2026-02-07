@@ -9,7 +9,7 @@ import (
 func (srv *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/health", srv.healthHandler)
+	mux.HandleFunc("/health", srv.handlers.Health)
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
