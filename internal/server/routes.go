@@ -1,6 +1,10 @@
 package server
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/rs/cors"
+)
 
 func (srv *Server) RegisterRoutes() http.Handler {
 	mux := http.NewServeMux()
