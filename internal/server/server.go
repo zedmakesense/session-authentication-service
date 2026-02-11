@@ -1,14 +1,19 @@
 package server
 
 import (
+	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/session-authentication-service/internal/db"
 	"github.com/session-authentication-service/internal/handlers"
+	"github.com/session-authentication-service/internal/repository"
+	"github.com/session-authentication-service/internal/service"
 )
 
 type Server struct {
@@ -24,10 +29,22 @@ func NewServer() *http.Server {
 		}
 	}
 
+	dsn := fmt.Sprintf(
+		"postgres://%s:%s@localhost:5432/%s",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+	)
+
+	db, err := db.New(context.Background(), dsn)
+	if err != nil {
+		log.Fatal(err)
+	}
+	userRepo := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepo)
+
 	deps := handlers.Deps{
-		// DB: db,
-		// Cache: cache,
-		// Logger: logger,
+		UserService: userService,
 	}
 	h := handlers.NewHandlers(deps)
 

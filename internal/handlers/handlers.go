@@ -1,11 +1,9 @@
 package handlers
 
-// Deps lists the concrete resources handlers need.
-// Add DB *sql.DB, Cache *redis.Client, Logger, etc.
+import "github.com/session-authentication-service/internal/service"
+
 type Deps struct {
-	// DB *sql.DB
-	// Cache *redis.Client
-	// Logger *zap.Logger
+	UserService *service.UserService
 }
 
 type Handlers struct {
